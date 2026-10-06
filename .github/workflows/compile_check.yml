@@ -1,0 +1,11 @@
+name: Compile Check
+on:
+  push:
+    branches: [ci-compile-check]
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - run: xcodebuild -version
+      - run: set -o pipefail && xcodebuild -project Tempio.xcodeproj -scheme Tempio -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build 2>&1 | tee build.log | grep -E "error:|warning: .*(concurren|Sendable)|BUILD" ; exit ${PIPESTATUS[0]}
