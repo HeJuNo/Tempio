@@ -1,53 +1,27 @@
 import SwiftUI
 
-/// Top-level navigation for Tempio. Each tab is a placeholder for the
-/// feature areas that will be built in Phase 2.
+/// Top-level navigation: Brand Studio (design), Create (fill & generate), History (output + insights).
 struct ContentView: View {
+    @EnvironmentObject private var store: TemplateStore
+
     var body: some View {
         TabView {
-            Tab("Brand Studio", systemImage: "paintpalette") {
-                PlaceholderScreen(
-                    title: "Brand Studio",
-                    systemImage: "paintpalette",
-                    message: "Template Sets, Brand Kit, Asset Library and the Template Designer will live here."
-                )
-            }
-            Tab("Create", systemImage: "square.and.pencil") {
-                PlaceholderScreen(
-                    title: "Create",
-                    systemImage: "square.and.pencil",
-                    message: "Pick a Template Set, a template and a size, then fill the image and text slots."
-                )
-            }
-            Tab("Output", systemImage: "square.and.arrow.up") {
-                PlaceholderScreen(
-                    title: "Output",
-                    systemImage: "square.and.arrow.up",
-                    message: "Save finished posts to the Camera Roll or share them via the Share Sheet."
-                )
-            }
+            BrandStudioView()
+                .tabItem { Label("Brand Studio", systemImage: "paintpalette") }
+            CreateView()
+                .tabItem { Label("Create", systemImage: "square.and.pencil") }
+            HistoryView()
+                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
         }
-        .tint(.accentColor)
-    }
-}
-
-private struct PlaceholderScreen: View {
-    let title: String
-    let systemImage: String
-    let message: String
-
-    var body: some View {
-        NavigationStack {
-            ContentUnavailableView {
-                Label(title, systemImage: systemImage)
-            } description: {
-                Text(message)
-            }
-            .navigationTitle(title)
+        .alert("Something went wrong",
+               isPresented: Binding(get: { store.lastError != nil }, set: { if !$0 { store.lastError = nil } })) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(store.lastError ?? "")
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView().environmentObject(TemplateStore())
 }

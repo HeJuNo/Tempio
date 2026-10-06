@@ -4,5 +4,47 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Tempio saves your finished Instagram posts to your Camera Roll.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Tempio lets you pick photos for image slots and your asset library.</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Tempio Template Set</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.tempio.artcraft</string>
+			</array>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeIdentifier</key>
+			<string>com.tempio.artcraft</string>
+			<key>UTTypeDescription</key>
+			<string>Tempio Template Set</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.zip-archive</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>artcraft</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
