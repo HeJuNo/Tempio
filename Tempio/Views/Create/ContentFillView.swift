@@ -19,18 +19,18 @@ struct ContentFillView: View {
     @State private var didSetup = false
     @State private var pendingShareURLs: [URL] = []
 
-    private var set: TemplateSet? { store.set(id: setID) }
-    private var template: PostTemplate? { set?.templates.first { $0.id == templateID } }
+    private var fillSet: TemplateSet? { store.set(id: setID) }
+    private var fillTemplate: PostTemplate? { fillSet?.templates.first { $0.id == templateID } }
 
     var body: some View {
         Group {
-            if let set, let template {
+            if let set = fillSet, let template = fillTemplate {
                 form(set: set, template: template)
             } else {
                 ContentUnavailableView("Template not found", systemImage: "questionmark.square.dashed")
             }
         }
-        .navigationTitle(template?.name ?? "Fill")
+        .navigationTitle(fillTemplate?.name ?? "Fill")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: setup)
         .sheet(item: $shareItem) { item in ShareSheet(items: item.items) }
@@ -59,7 +59,7 @@ struct ContentFillView: View {
     }
 
     private func setup() {
-        guard !didSetup, let template else { return }
+        guard !didSetup, let template = fillTemplate else { return }
         didSetup = true
         previewSize = sizes.first ?? template.instagramSize
         for zone in template.zones where zone.zoneType == .text {
@@ -69,7 +69,7 @@ struct ContentFillView: View {
     }
 
     private func refreshPreview() {
-        guard let set, let template else { return }
+        guard let set = fillSet, let template = fillTemplate else { return }
         preview = PostImageRenderer.render(template: template, filledTexts: texts, filledImages: images,
                                            set: set, store: store, size: previewSize, scale: 0.35,
                                            showPlaceholders: true)
