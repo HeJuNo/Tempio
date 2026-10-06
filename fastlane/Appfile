@@ -1,8 +1,8 @@
 # Tempio — the bundle identifier is derived from the TEAMID secret at build time.
-TEMPIO_TEAMID = ENV["TEAMID"]
+tempio_teamid = ENV["TEAMID"]
 
-app_identifier("com.#{TEMPIO_TEAMID}.tempio")
-team_id(TEMPIO_TEAMID) if TEMPIO_TEAMID && !TEMPIO_TEAMID.empty?
+app_identifier("com.#{tempio_teamid}.tempio")
+team_id(tempio_teamid) if tempio_teamid && !tempio_teamid.empty?
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
